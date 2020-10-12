@@ -26,17 +26,18 @@ function final_2014 (elementOfArray) {
         }
     }
 }
+
 fifaData.forEach(final_2014);
 
 
 
 /* Task 2: Create a function called  getFinals that takes `data` as an argument and returns an array of objects with only finals data */
 
-function getFinals(/* code here */) {
-
-    /* code here */
-
+function getFinals(data) {
+    return data.filter(elementOfArray => elementOfArray.Stage === "Final");
 };
+
+console.log("Finals",getFinals(fifaData));
 
 /* Task 3: Implement a higher-order function called `getYears` that accepts the callback function `getFinals`, and returns an array called `years` containing all of the years in the dataset */
 
