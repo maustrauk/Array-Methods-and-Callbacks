@@ -94,13 +94,21 @@ for (let i = 0; i < myString.length; i++) {
 }
 /* Task 6: Write a function called `getAverageGoals` that accepts a parameter `data` and returns the the average number of home team goals and away team goals scored per match (Hint: use .reduce and do this in 2 steps) */
 
-function getAverageGoals(/* code here */) {
-
-    /* code here */
-
+function getAverageGoals(data) {
+    function homeTeamGoalsCalculator (total, goals) {
+        return total + goals["Home Team Goals"];
+    }
+    function awayTeamGoalsCalculator (total, goals) {
+        return total + goals["Away Team Goals"];
+    }
+    let homeTeamGoals = data.reduce(homeTeamGoalsCalculator,0);
+    let awayTeamGoals = data.reduce(awayTeamGoalsCalculator,0);
+    homeTeamGoals = homeTeamGoals / data.length;
+    awayTeamGoals = awayTeamGoals / data.length;
+    return `Home Team Goals AVG: ${homeTeamGoals} Away Team Goals AVG: ${awayTeamGoals}`;
 };
 
-getAverageGoals();
+console.log(getAverageGoals(fifaData));
 
 /// STRETCH 🥅 //
 
