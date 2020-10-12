@@ -117,13 +117,16 @@ console.log(getAverageGoals(fifaData));
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
-
-    /* code here */
-
+function getCountryWins(data, teamInitials) {
+    const finalData = getFinals(data);
+    const homeTeamFinalData = finalData.filter(final => final["Home Team Initials"] === teamInitials);
+    const awayTeamFinalData = finalData.filter(final => final["Away Team Initials"] === teamInitials);
+    const homeWin = homeTeamFinalData.filter(final => final["Home Team Goals"] > final["Away Team Goals"]);
+    const awayWin = awayTeamFinalData.filter(final => final["Home Team Goals"] < final["Away Team Goals"]);
+    return homeWin.length + awayWin.length;
 };
 
-getCountryWins();
+console.log("GER wins = ",getCountryWins(fifaData, "GER"));
 
 
 /* Stretch 3: Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
