@@ -1,5 +1,5 @@
 import { fifaData } from './fifa.js';
-console.log(fifaData);
+//console.log(fifaData);
 
 console.log('its working');
 // ⚽️ M  V P ⚽️ //
@@ -11,6 +11,23 @@ console.log('its working');
 (c) Home Team goals for 2014 world cup final
 (d) Away Team goals for 2014 world cup final
 (e) Winner of 2014 world cup final */
+
+function final_2014 (elementOfArray) {
+    if (elementOfArray.Year === 2014 && elementOfArray.Stage === "Final") {
+        console.log("Home Team Name: ",elementOfArray["Home Team Name"]);//a
+        console.log("Away Team Name: ",elementOfArray["Away Team Name"]);//b
+        console.log("Home Team Goals: ",elementOfArray["Home Team Goals"]);//c
+        console.log("Away Team Goals: ",elementOfArray["Away Team Goals"]);//d
+        //e
+        if (elementOfArray["Home Team Goals"] > elementOfArray["Away Team Goals"]) {
+            console.log("Winner: ",elementOfArray["Home Team Name"]);
+        } else {
+            console.log("Winner: ", elementOfArray["Away Team Name"]);
+        }
+    }
+}
+fifaData.forEach(final_2014);
+
 
 
 /* Task 2: Create a function called  getFinals that takes `data` as an argument and returns an array of objects with only finals data */
