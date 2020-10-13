@@ -184,12 +184,33 @@ console.log(getGoals(fifaData));
 
 /* Stretch 4: Write a function called badDefense() that accepts a parameter `data` and calculates the team with the most goals scored against them per appearance (average goals against) in the World Cup finals */
 
-function badDefense(/* code here */) {
-
-    /* code here */
-
+function badDefense(data) {
+    const teamInitialsArray = getTeamInitials(data);
+    const teamAVGGoals = [];
+    for (let i = 0; i < teamInitialsArray.length; i++) {
+        const teamScore = [];
+        for (let j = 0; j < data.length; j++) {
+            const dataObject = data[j];
+            if (dataObject["Home Team Initials"] === teamInitialsArray[i]) {
+                teamScore.push(dataObject["Away Team Goals"]);
+            }
+            if (dataObject["Away Team Initials"] === teamInitialsArray[i]) {
+                teamScore.push(dataObject["Home Team Goals"]);
+            }
+        }
+        let avgGoals = teamScore.reduce((accumulator, currentValue) => accumulator + currentValue);
+        avgGoals = avgGoals / teamScore.length;
+        const teamObject = {"initials" : teamInitialsArray[i], "avgGoals" : avgGoals};
+        teamAVGGoals.push(teamObject);
+    }
+    const maxAVGGoals = Math.max.apply(Math, teamAVGGoals.map(function (o) { return o.avgGoals}));
+    for (let i = 0; i < teamAVGGoals.length; i++) {
+        if(teamAVGGoals[i].avgGoals === maxAVGGoals) {
+            return `Team Initials: "${teamAVGGoals[i].initials}" with AVG Goals conceded per game: ${teamAVGGoals[i].avgGoals}`;
+        }
+    }
 };
 
-badDefense();
+console.log(badDefense(fifaData));
 
 /* If you still have time, use the space below to work on any stretch goals of your chosing as listed in the README file. */
