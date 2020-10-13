@@ -2,7 +2,7 @@ import { fifaData } from './fifa.js';
 import { removeDuplicateInArray } from './index.js';
 import { getFinals } from './index.js';
 
-//1 Task
+//Task 1
 function getYears (data) {
     const transformedDataArray = [];
     for (let i =0; i < data.length; i++) {
@@ -27,7 +27,7 @@ function countryCounter (data, teamInitial) {
 
 console.log("Total number of Soviet Union World Cup appearances = ",countryCounter(fifaData, "URS"));
 
-//2 Task
+//Task 2
 function accountTies (data) {
     const finalsData = getFinals(data);
     const tiesData = finalsData.filter(final => final["Win conditions"].search("penalties") != -1);
@@ -35,3 +35,18 @@ function accountTies (data) {
 }
 
 console.log("Number of Ties on finals = ",accountTies(fifaData));
+
+//Task 3
+function goalCounter (data, teamInitial) {
+    const teamGamesHome = data.filter(game => game["Home Team Initials"] === teamInitial);
+    const teamGamesAway = data.filter(game => game["Away Team Initials"] === teamInitial);
+    const goalsHome = teamGamesHome.reduce(function (accumulator, currentValue) {
+        return accumulator + currentValue["Home Team Goals"]
+        }, 0)
+    const goalsAway = teamGamesAway.reduce(function (accumulator, currentValue) {
+        return accumulator + currentValue["Away Team Goals"]
+        }, 0)
+    return goalsHome + goalsAway;
+}
+
+console.log("Total number of Soviet Union goals = ", goalCounter(fifaData, "URS"));
