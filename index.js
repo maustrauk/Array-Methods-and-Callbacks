@@ -126,18 +126,60 @@ function getCountryWins(data, teamInitials) {
     return homeWin.length + awayWin.length;
 };
 
-console.log("GER wins = ",getCountryWins(fifaData, "GER"));
+console.log("Brazil wins = ",getCountryWins(fifaData, "BRA"));
 
 
 /* Stretch 3: Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
-function getGoals(/* code here */) {
+function removeDuplicateInArray (myArray) {
+    let myOrderedArray = myArray.reduce(function (accumulator, currentValue) {
+        if (accumulator.indexOf(currentValue) === -1) {
+          accumulator.push(currentValue)
+        }
+        return accumulator
+      }, [])
+      return myOrderedArray;
+}
 
-    /* code here */
+function getTeamInitials (data) {
+    const transformedDataArray = [];
+    for (let i =0; i < data.length; i++) {
+        const arrayObject = data[i];
+        transformedDataArray.push(arrayObject["Home Team Initials"]);
+        transformedDataArray.push(arrayObject["Away Team Initials"]);
+    }
+    return removeDuplicateInArray(transformedDataArray);
+}
 
+
+function getGoals(data) {
+    const teamInitialsArray = getTeamInitials(data);
+    const teamAVGGoals = [];
+    for (let i = 0; i < teamInitialsArray.length; i++) {
+        const teamScore = [];
+        for (let j = 0; j < data.length; j++) {
+            const dataObject = data[j];
+            if (dataObject["Home Team Initials"] === teamInitialsArray[i]) {
+                teamScore.push(dataObject["Home Team Goals"]);
+            }
+            if (dataObject["Away Team Initials"] === teamInitialsArray[i]) {
+                teamScore.push(dataObject["Away Team Goals"]);
+            }
+        }
+        let avgGoals = teamScore.reduce((accumulator, currentValue) => accumulator + currentValue);
+        avgGoals = avgGoals / teamScore.length;
+        const teamObject = {"initials" : teamInitialsArray[i], "avgGoals" : avgGoals};
+        teamAVGGoals.push(teamObject);
+    }
+    const maxAVGGoals = Math.max.apply(Math, teamAVGGoals.map(function (o) { return o.avgGoals}));
+    for (let i = 0; i < teamAVGGoals.length; i++) {
+        if(teamAVGGoals[i].avgGoals === maxAVGGoals) {
+            return `Team Initials: "${teamAVGGoals[i].initials}" with AVG Goals per game: ${teamAVGGoals[i].avgGoals}`;
+        }
+    }
 };
 
-getGoals();
+console.log(getGoals(fifaData));
 
 
 /* Stretch 4: Write a function called badDefense() that accepts a parameter `data` and calculates the team with the most goals scored against them per appearance (average goals against) in the World Cup finals */
