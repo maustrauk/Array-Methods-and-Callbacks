@@ -131,7 +131,7 @@ console.log("Brazil wins = ",getCountryWins(fifaData, "BRA"));
 
 /* Stretch 3: Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
-function removeDuplicateInArray (myArray) {
+export function removeDuplicateInArray (myArray) {
     let myOrderedArray = myArray.reduce(function (accumulator, currentValue) {
         if (accumulator.indexOf(currentValue) === -1) {
           accumulator.push(currentValue)
